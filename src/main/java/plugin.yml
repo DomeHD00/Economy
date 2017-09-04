@@ -1,0 +1,6 @@
+name: EconomySystem
+version: 1.0
+author: Dome_HD
+description: EconomySystem for Rewinside.tv
+main: net.twerion.economy.Main
+commands:
