@@ -3,6 +3,7 @@ package net.twerion.economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.twerion.economy.commands.Economy;
 import net.twerion.economy.config.ConfigCreator;
 
 
@@ -22,9 +23,11 @@ public class Main extends JavaPlugin{
 		//Create Configs
 		configCreator.createDatabase();
 		configCreator.createConfig();
+		//commands and evnts
+		onCommands();
 		//MySQL
 		Mysql.connect();
-		Mysql.update("CREATE TABLE IF NOT EXISTS account(UUID VARCHAR(64),Name VARCHAR(16),accountId VARCHAR(6),money INT(10))");
+		Mysql.update("CREATE TABLE IF NOT EXISTS account(UUID VARCHAR(64),Name VARCHAR(16),accountId VARCHAR(8),money INT(10))");
 		isMysqlConnect();
 	}
 	
@@ -45,8 +48,11 @@ public class Main extends JavaPlugin{
 		}, 20 * 5, 0);
 	}
 	
+	private void onCommands(){
+		getCommand("economy").setExecutor(new Economy(this));
+	}
 	
-	public static Main getinstance(){
+	public static Main getInstance(){
 		return instance;
 	}
 	public String getPrefix(){

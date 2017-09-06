@@ -4,3 +4,4 @@ author: Dome_HD
 description: EconomySystem for Rewinside.tv
 main: net.twerion.economy.Main
 commands:
+  economy:
