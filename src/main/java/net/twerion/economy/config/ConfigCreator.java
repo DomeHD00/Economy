@@ -12,7 +12,9 @@ public class ConfigCreator {
 		ConfigCreator.cfg = this.manager.getNewConfig("config");
 		if (ConfigCreator.cfg.isFirstrun()) {
 
-
+			ConfigCreator.cfg.set("interest", 5, "zinsen in %");
+			ConfigCreator.cfg.set("foodCoins", 3.5, "Die coins die man fürs füttern bekommen");
+			
 			ConfigCreator.cfg.saveConfig();
 		}
 	}

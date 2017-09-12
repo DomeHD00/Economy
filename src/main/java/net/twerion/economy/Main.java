@@ -1,10 +1,17 @@
 package net.twerion.economy;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.twerion.economy.commands.Economy;
 import net.twerion.economy.config.ConfigCreator;
+import net.twerion.economy.config.ConfigManager;
+import net.twerion.economy.events.PlayerInteractEntity;
+import net.twerion.economy.events.PlayerJoin;
+import net.twerion.economy.events.PlayerQuit;
 
 
 public class Main extends JavaPlugin{
@@ -14,6 +21,7 @@ public class Main extends JavaPlugin{
 	String noPermission = "§cDafür hast du keine Rechte!";
 	static Main instance;
 	ConfigCreator configCreator = new ConfigCreator();
+	HashMap<Player, EconomyAPI> playerAccount = new HashMap<Player, EconomyAPI>();
 	
 	@Override
 	public void onEnable() {
@@ -25,9 +33,10 @@ public class Main extends JavaPlugin{
 		configCreator.createConfig();
 		//commands and evnts
 		onCommands();
+		onEvents();
 		//MySQL
 		Mysql.connect();
-		Mysql.update("CREATE TABLE IF NOT EXISTS account(UUID VARCHAR(64),Name VARCHAR(16),accountId VARCHAR(8),money INT(10))");
+		Mysql.update("CREATE TABLE IF NOT EXISTS account(UUID VARCHAR(64),Name VARCHAR(16),accountId VARCHAR(8),money DOUBLE)");
 		isMysqlConnect();
 	}
 	
@@ -44,14 +53,26 @@ public class Main extends JavaPlugin{
 				if (!Mysql.isConnect()) {
 					Mysql.connect();
 				}
+			
+			for(Player all : Bukkit.getOnlinePlayers()){
+				for(String account : playerAccount.get(all).getAccounts()){
+					playerAccount.get(all).addCoins(account, playerAccount.get(all).getCoinsFormAccount(account) * ConfigCreator.cfg.getInt("interest") / 100);
+				}
 			}
-		}, 20 * 5, 0);
+			
+			
+			}
+		}, 0, 20 * 60 * 5); //20 * 60 * 5
 	}
 	
 	private void onCommands(){
 		getCommand("economy").setExecutor(new Economy(this));
 	}
-	
+	private void onEvents(){
+		new PlayerJoin(this);
+		new PlayerQuit(this);
+		new PlayerInteractEntity(this);
+	}
 	public static Main getInstance(){
 		return instance;
 	}
@@ -60,6 +81,9 @@ public class Main extends JavaPlugin{
 	}
 	public String getNoPermission(){
 		return noPermission;
+	}
+	public HashMap<Player, EconomyAPI> getPlayerAccount(){
+		return playerAccount;
 	}
 	
 }
