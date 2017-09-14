@@ -30,15 +30,15 @@ public class PlayerInteractEntity implements Listener{
 			Entity en = e.getRightClicked();
 			if(en instanceof Cow || en instanceof Sheep){
 				if(e.getPlayer().getItemInHand().getType() == Material.WHEAT){
-					giveMoneyToFood(e.getPlayer());
+					giveMoneyForFood(e.getPlayer());
 				}
 			}else if(en instanceof Rabbit){
 				if(e.getPlayer().getItemInHand().getType() == Material.CARROT){
-					giveMoneyToFood(e.getPlayer());
+					giveMoneyForFood(e.getPlayer());
 				}
 			}else if(en instanceof Chicken){
 				if(e.getPlayer().getItemInHand().getType() == Material.SEEDS){
-					giveMoneyToFood(e.getPlayer());
+					giveMoneyForFood(e.getPlayer());
 				}
 			}
 			
@@ -47,7 +47,7 @@ public class PlayerInteractEntity implements Listener{
 	}
 	
 	
-	private static void giveMoneyToFood(Player p){
+	private static void giveMoneyForFood(Player p){
 		Main.getInstance().getPlayerAccount().get(p).addCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), ConfigCreator.cfg.getDouble("foodCoins"));
 	}
 }

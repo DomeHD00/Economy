@@ -8,8 +8,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.twerion.economy.commands.Economy;
 import net.twerion.economy.config.ConfigCreator;
-import net.twerion.economy.config.ConfigManager;
+import net.twerion.economy.events.EntityDeath;
+import net.twerion.economy.events.PlayerInteract;
 import net.twerion.economy.events.PlayerInteractEntity;
+import net.twerion.economy.events.PlayerItemConsume;
 import net.twerion.economy.events.PlayerJoin;
 import net.twerion.economy.events.PlayerQuit;
 
@@ -36,7 +38,7 @@ public class Main extends JavaPlugin{
 		onEvents();
 		//MySQL
 		Mysql.connect();
-		Mysql.update("CREATE TABLE IF NOT EXISTS account(UUID VARCHAR(64),Name VARCHAR(16),accountId VARCHAR(8),money DOUBLE)");
+		Mysql.update("CREATE TABLE IF NOT EXISTS account(UUID VARCHAR(64),Name VARCHAR(16),accountId VARCHAR(8),money DOUBLE,transaktionen INT(4))");
 		isMysqlConnect();
 	}
 	
@@ -72,6 +74,9 @@ public class Main extends JavaPlugin{
 		new PlayerJoin(this);
 		new PlayerQuit(this);
 		new PlayerInteractEntity(this);
+		new EntityDeath(this);
+		new PlayerItemConsume(this);
+		new PlayerInteract(this);
 	}
 	public static Main getInstance(){
 		return instance;

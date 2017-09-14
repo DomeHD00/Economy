@@ -12,8 +12,11 @@ public class ConfigCreator {
 		ConfigCreator.cfg = this.manager.getNewConfig("config");
 		if (ConfigCreator.cfg.isFirstrun()) {
 
-			ConfigCreator.cfg.set("interest", 5, "zinsen in %");
-			ConfigCreator.cfg.set("foodCoins", 3.5, "Die coins die man fürs füttern bekommen");
+			ConfigCreator.cfg.set("interest", 5, "Zinsen in %");
+			ConfigCreator.cfg.set("foodCoins", 3.5, "Die Coins die man fürs füttern bekommen!");
+			ConfigCreator.cfg.set("monsterKillCoins", 3.5, "Die Coins die man fürs töten von Monsteren bekommt!");
+			ConfigCreator.cfg.set("animalsFoodCoins", 3.5, "Die Coins die man verliert fürs füttern von Tieren!");
+			ConfigCreator.cfg.set("beefFoodCoins", 3.5, "Die Coins die man verliert fürs essen von Fleisch!");
 			
 			ConfigCreator.cfg.saveConfig();
 		}
