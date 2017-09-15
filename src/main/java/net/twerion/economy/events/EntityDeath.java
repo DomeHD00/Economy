@@ -12,12 +12,20 @@ import net.twerion.economy.config.ConfigCreator;
 
 public class EntityDeath implements Listener {
 
+	static double animals,monster;
+	
+	static {
+		animals = ConfigCreator.cfg.getDouble("animalsFoodCoins");
+		monster = ConfigCreator.cfg.getDouble("monsterKillCoins");
+	}
+	
+	
 	public EntityDeath(Main plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler
-	public static void InteractEntityEvent(EntityDeathEvent e) {
+	public static void entityDeath(EntityDeathEvent e) {
 
 		if (e.getEntity().getKiller() != null || e.getEntity().getKiller() instanceof Player) {
 			if (e.getEntity() instanceof Monster) {
@@ -31,10 +39,10 @@ public class EntityDeath implements Listener {
 	}
 
 	private static void removeMoneyForAnimals(Player p) {
-		Main.getInstance().getPlayerAccount().get(p).removeCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), ConfigCreator.cfg.getDouble("animalsFoodCoins"));
+		Main.getInstance().getPlayerAccount().get(p).removeCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), animals, "Animal kill");
 	}
 
 	private static void giveMoneyForMonster(Player p) {
-		Main.getInstance().getPlayerAccount().get(p).addCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), ConfigCreator.cfg.getDouble("monsterKillCoins"));
+		Main.getInstance().getPlayerAccount().get(p).addCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), monster, "Monster kill");
 	}
 }

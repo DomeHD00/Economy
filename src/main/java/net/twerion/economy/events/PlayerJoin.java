@@ -5,9 +5,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
-import net.twerion.economy.EconomyAPI;
 import net.twerion.economy.Main;
-
+import net.twerion.economy.utils.EconomyAPI;
 
 public class PlayerJoin implements Listener {
 
@@ -18,8 +17,9 @@ public class PlayerJoin implements Listener {
 	}
 
 	@EventHandler
-	public void Player(PlayerJoinEvent e) {
+	public void player(PlayerJoinEvent e) {
 		Main.getInstance().getPlayerAccount().put(e.getPlayer(), new EconomyAPI(e.getPlayer()));
+		Main.getInstance().getPlayerAccount().get(e.getPlayer()).setScoreboard();
 	}
 
 }

@@ -16,7 +16,7 @@ public class PlayerItemConsume implements Listener {
 	}
 
 	@EventHandler
-	public static void InteractEntityEvent(PlayerItemConsumeEvent e) {
+	public static void playerItem(PlayerItemConsumeEvent e) {
 		
 		
 		if(e.getItem().getType() == Material.RAW_BEEF || e.getItem().getType() == Material.COOKED_BEEF || e.getItem().getType() == Material.RAW_CHICKEN || e.getItem().getType() == Material.COOKED_CHICKEN || e.getItem().getType() == Material.RABBIT || e.getItem().getType() == Material.COOKED_RABBIT || e.getItem().getType() == Material.MUTTON || e.getItem().getType() == Material.COOKED_MUTTON){
@@ -25,6 +25,6 @@ public class PlayerItemConsume implements Listener {
 	}
 
 	private static void removeMoneyForBeefFood(Player p) {
-		Main.getInstance().getPlayerAccount().get(p).removeCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), ConfigCreator.cfg.getDouble("beefFoodCoins"));
+		Main.getInstance().getPlayerAccount().get(p).removeCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), ConfigCreator.cfg.getDouble("beefFoodCoins"), "Consume Item");
 	}
 }

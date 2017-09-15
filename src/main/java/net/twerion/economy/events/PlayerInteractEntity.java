@@ -18,13 +18,19 @@ import net.twerion.economy.config.ConfigCreator;
 
 public class PlayerInteractEntity implements Listener{
 
+	static double food;
+	
+	static {
+		food = ConfigCreator.cfg.getDouble("foodCoins");
+	}
+	
 	public PlayerInteractEntity(Main plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	
 	@EventHandler
-	public static void InteractEntityEvent(PlayerInteractEntityEvent e){
+	public static void playerInteract(PlayerInteractEntityEvent e){
 		
 		if(e.getRightClicked() instanceof Animals){
 			Entity en = e.getRightClicked();
@@ -48,6 +54,6 @@ public class PlayerInteractEntity implements Listener{
 	
 	
 	private static void giveMoneyForFood(Player p){
-		Main.getInstance().getPlayerAccount().get(p).addCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), ConfigCreator.cfg.getDouble("foodCoins"));
+		Main.getInstance().getPlayerAccount().get(p).addCoins(Main.getInstance().getPlayerAccount().get(p).getFirstAccount(), food, "Animal Food");
 	}
 }

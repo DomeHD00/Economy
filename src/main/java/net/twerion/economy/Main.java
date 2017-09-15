@@ -14,6 +14,8 @@ import net.twerion.economy.events.PlayerInteractEntity;
 import net.twerion.economy.events.PlayerItemConsume;
 import net.twerion.economy.events.PlayerJoin;
 import net.twerion.economy.events.PlayerQuit;
+import net.twerion.economy.utils.EconomyAPI;
+import net.twerion.economy.utils.Mysql;
 
 
 public class Main extends JavaPlugin{
@@ -39,6 +41,7 @@ public class Main extends JavaPlugin{
 		//MySQL
 		Mysql.connect();
 		Mysql.update("CREATE TABLE IF NOT EXISTS account(UUID VARCHAR(64),Name VARCHAR(16),accountId VARCHAR(8),money DOUBLE,transaktionen INT(4))");
+		Mysql.update("CREATE TABLE IF NOT EXISTS transaktionen(account VARCHAR(16),action VARCHAR(10),money DOUBLE,commit VARCHAR(100),id INT NOT NULL AUTO_INCREMENT,PRIMARY KEY (id))");
 		isMysqlConnect();
 	}
 	
@@ -58,13 +61,13 @@ public class Main extends JavaPlugin{
 			
 			for(Player all : Bukkit.getOnlinePlayers()){
 				for(String account : playerAccount.get(all).getAccounts()){
-					playerAccount.get(all).addCoins(account, playerAccount.get(all).getCoinsFormAccount(account) * ConfigCreator.cfg.getInt("interest") / 100);
+					playerAccount.get(all).addCoins(account, playerAccount.get(all).getCoinsFormAccount(account) * ConfigCreator.cfg.getInt("interest") / 100, "interest rate");
 				}
 			}
 			
 			
 			}
-		}, 0, 20 * 60 * 5); //20 * 60 * 5
+		}, 0, 20 * 60 * 5);
 	}
 	
 	private void onCommands(){

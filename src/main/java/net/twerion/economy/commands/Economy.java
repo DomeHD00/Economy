@@ -28,23 +28,30 @@ public class Economy implements CommandExecutor {
 
 			if (args.length == 1) {
 				if (args[0].equals("create")) {
+					if(!p.hasPermission("Economy.command.create")){ p.sendMessage(plugin.getNoPermission()); return true;}
 					plugin.getPlayerAccount().get(p).createNewAccount();
 					p.sendMessage(plugin.getPrefix() + "§aDu hast nun ein neues Konto");
 				} else if (args[0].equals("money")) {
-					plugin.getPlayerAccount().get(p).setDisplayAllAccount();
+					if(!p.hasPermission("Economy.command.money")){ p.sendMessage(plugin.getNoPermission()); return true;}
+					plugin.getPlayerAccount().get(p).displayAllAccount();
 				}
 			} else if (args.length == 2) {
 				if (args[0].equals("delete")) {
+					if(!p.hasPermission("Economy.command.delete")){ p.sendMessage(plugin.getNoPermission()); return true;}
 					plugin.getPlayerAccount().get(p).deleteAccount(args[1]);
 					p.sendMessage(plugin.getPrefix() + "§aDu hast das Konto §e" + args[1] + " §aGelöscht");
 				}else if (args[0].equals("money")) {
-					plugin.getPlayerAccount().get(p).setDisplayMoney(args[1]);
+					if(!p.hasPermission("Economy.command.money")){ p.sendMessage(plugin.getNoPermission()); return true;}
+					plugin.getPlayerAccount().get(p).displayMoney(args[1]);
+				}else if(args[0].equals("transaktionen")){
+					if(!p.hasPermission("Economy.command.transaktionen")){ p.sendMessage(plugin.getNoPermission()); return true;}
+					plugin.getPlayerAccount().get(p).displayLastTransaktionen(args[1]);
 				}
-				
-				
-			} else if (args.length == 4) {
+			} else if (args.length == 5) {
 				if (args[0].equals("send")) {
-					
+					if(!p.hasPermission("Economy.command.send")){ p.sendMessage(plugin.getNoPermission()); return true;}
+					plugin.getPlayerAccount().get(p).sendMoneyToOtherAccont(p, args[1], args[2], args[3], Integer.parseInt(args[4]));
+					p.sendMessage(plugin.getPrefix() + "§aÜberweisung Erfolgrich!");
 				}
 			}
 

@@ -1,4 +1,4 @@
-package net.twerion.economy;
+package net.twerion.economy.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

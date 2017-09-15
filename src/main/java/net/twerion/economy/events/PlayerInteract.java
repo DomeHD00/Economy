@@ -12,8 +12,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import net.twerion.economy.EconomyAPI;
 import net.twerion.economy.Main;
+import net.twerion.economy.utils.EconomyAPI;
 
 public class PlayerInteract implements Listener{
 
@@ -23,7 +23,7 @@ public class PlayerInteract implements Listener{
 	
 	
 	@EventHandler
-	public static void InteractEntityEvent(PlayerInteractEvent e){
+	public static void player(PlayerInteractEvent e){
 		Player p = e.getPlayer();
 		
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {

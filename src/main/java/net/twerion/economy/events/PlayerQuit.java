@@ -16,7 +16,7 @@ public class PlayerQuit implements Listener {
 	}
 
 	@EventHandler
-	public void Player(PlayerQuitEvent e){
+	public void player(PlayerQuitEvent e){
 		Main.getInstance().getPlayerAccount().remove(e.getPlayer());
 	}
 
